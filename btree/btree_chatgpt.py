@@ -29,12 +29,15 @@ class BinarySearchTree:
                     else:
                         current = current.right
 
-    def traverse(self, root, result):
+    def pre_order_traverse(self, root, result):
         if root is None:
             return
         result.append(root)
-        self.traverse(root.left, result)
-        self.traverse(root.right, result)
+        self.pre_order_traverse(root.left, result)
+        self.pre_order_traverse(root.right, result)
+
+    def level_order_traverse(self, root, result):
+        pass
 
     def search(self, value):
         current = self.root
@@ -50,7 +53,7 @@ class BinarySearchTree:
     def __str__(self):
         output = ''
         items = []
-        self.traverse(self.root, items)
+        self.pre_order_traverse(self.root, items)
         n = 0
         count = 0
         for item in items:
