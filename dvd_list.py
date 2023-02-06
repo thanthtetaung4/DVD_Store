@@ -29,9 +29,15 @@ class DvDList:
                         current = current.next
                 self.dvd_list.insert(dvd)
 
-    def find_dvd(self, dvd):
-        # use the best searching algorithm for linked list
-        pass
+    def find_dvd(self, dvd_name):
+        # use the best searching algorithm for linked list which is linear search
+        current_node = self.dvd_list.head
+        while current_node.next is not None:
+            if current_node.data.get_movie_name() == dvd_name:
+                return current_node.data
+            else:
+                current_node = current_node.next
+        return f"{dvd_name} is not in your store. Sorry for inconvenience :("
 
     def __str__(self):
         output = ""
@@ -56,4 +62,7 @@ if __name__ == '__main__':
     dvds.insert(dvd_4)
     t2 = datetime.datetime.now()
     print('Time taken to insert data', t2 - t1, '\n')
+
     print(dvds)
+
+    print(dvds.find_dvd('Fantastic Beasts and Where to Find Them'))
