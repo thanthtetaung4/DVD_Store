@@ -7,6 +7,8 @@ class DVD:
         self.company = company
         self.copies = copies
 
+    def get_movie_name(self):
+        return self.movie_name
     def __str__(self):
         output = f"Movie Name: {self.movie_name}\n" \
                  f"Stars: {self.stars}\n" \

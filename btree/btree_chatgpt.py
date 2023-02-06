@@ -1,6 +1,3 @@
-import queue
-
-
 class Node:
     def __init__(self, value):
         self.value = value
@@ -40,17 +37,7 @@ class BinarySearchTree:
         self.pre_order_traverse(root.right, result)
 
     def level_order_traverse(self, root, result):
-        if root is None:
-            return
-        q = queue.Queue()
-        q.put(root)
-        node = None
-        while not q.empty():
-            result.append(node.value)
-            if node.left is not None:
-                q.put(node.left)
-                if node.right is not None:
-                    q.put(node.right)
+        pass
 
     def search(self, value):
         current = self.root
@@ -67,7 +54,6 @@ class BinarySearchTree:
         output = ''
         items = []
         self.pre_order_traverse(self.root, items)
-        self.level_order_traverse(self.root, items)
         n = 0
         count = 0
         for item in items:
@@ -75,8 +61,8 @@ class BinarySearchTree:
             count += 1
             if count == 2 ** n:
                 count = 0
-                output += '\n'
-                n += 1
+                output +='\n'
+                n+=1
         return output
 
 
