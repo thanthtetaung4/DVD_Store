@@ -3,10 +3,36 @@ class Customer:
         self.fist_name = fname
         self.last_name = lname
         self.account_number = account_number
-        self.dvd_list = dvd_list
+        self.dvd_list = dvd_list  # dvd name : date => dictionary
 
     def get_name(self):
         return self.fist_name + self.last_name
+
+    def get_first_name(self):
+        return self.fist_name
+
+    def get_last_name(self):
+        return self.last_name
+
+    def get_account_number(self):
+        return self.account_number
+
+    def get_dvd_list(self):
+        return self.dvd_list
+
+    def set_name(self, fname, lname):
+        self.fist_name = fname
+        self.last_name = lname
+
+    def set_first_name(self, fname):
+        self.fist_name = fname
+
+    def set_last_name(self, lanme):
+        self.last_name = lname
+
+    # no set for account number unchangable
+    def set_dvd_list(self, dvd_list):
+        self.dvd_list = dvd_list
 
     def __str__(self):
         dvds = ''

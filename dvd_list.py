@@ -30,7 +30,8 @@ class DvDList:
                 self.dvd_list.insert(dvd)
 
     def find_dvd(self, dvd_name):
-        # use the best searching algorithm for linked list which is linear search
+        # use the best searching algorithm for linked list which is linear search because the traversal of LL can't
+        # be improved from O(n)
         current_node = self.dvd_list.head
         while current_node.next is not None:
             if current_node.data.get_movie_name() == dvd_name:
