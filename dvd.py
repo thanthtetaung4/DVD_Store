@@ -1,11 +1,13 @@
 class DVD:
-    def __init__(self, movie_name, stars, producer, director, company, copies):
+    def __init__(self, movie_name, stars, producer, director, company, copies, released_date):
         self.movie_name = movie_name
         self.stars = stars # list of actors in the movie
         self.producer = producer
         self.director = director
         self.company = company
         self.copies = copies
+        self.popularity = None
+        self.released_date = released_date
 
     def get_movie_name(self):
         return self.movie_name
@@ -25,6 +27,18 @@ class DVD:
     def get_copies(self):
         return self.copies
 
+    def get_released_date(self):
+        return self.released_date
+
+    def get_popularity(self):
+        return self.popularity
+
+    def set_released_date(self, released_date):
+        self.released_date = released_date
+
+    def set_popularity(self, popularity):
+        self.popularity = popularity
+        
     def set_movie_name(self, movie_name):
         self.movie_name = movie_name
 

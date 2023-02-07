@@ -3,7 +3,7 @@ class Customer:
         self.fist_name = fname
         self.last_name = lname
         self.account_number = account_number
-        self.dvd_list = dvd_list  # dvd name : date => dictionary
+        self.dvd_list = dvd_list  # {dvd name : rented date} => dictionary
 
     def get_name(self):
         return self.fist_name + self.last_name
