@@ -58,15 +58,20 @@ class DVD:
         self.copies = copies
         
     def __str__(self):
+        stars = ''
+        for star in self.stars:
+            stars += star + '\t'
         output = f"Movie Name: {self.movie_name}\n" \
-                 f"Stars: {self.stars}\n" \
+                 f"Stars: {stars}\n" \
                  f"Producer: {self.producer}\n" \
                  f"Director: {self.director}\n" \
                  f"Company: {self.company}\n" \
-                 f"Copies: {self.copies}\n"
+                 f"Copies: {self.copies}\n" \
+                 f"Released Date: {self.released_date}\n" \
+                 f"Popularity: {self.popularity}\n"
         return output
 
 
 if __name__ == '__main__':
-    dvd_1 = DVD('a', [1, 2, 3, 4, 5], 'asdf', 'jkl', 'qwerty', 10)
+    dvd_1 = DVD('a', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10)
     print(dvd_1)

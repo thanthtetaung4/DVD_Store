@@ -1,6 +1,5 @@
 from dvd import DVD
 from linked_list import LinkedList
-from node import Node
 import datetime
 
 
@@ -51,10 +50,11 @@ class DvDList:
 
 
 if __name__ == '__main__':
-    dvd_2 = DVD('Interstellar', [1, 2, 3, 4, 5], 'asdf', 'jkl', 'qwerty', 10)
-    dvd_1 = DVD('Your Name', [1, 2, 3, 4, 5], 'asdf', 'jkl', 'qwerty', 10)
-    dvd_3 = DVD('A Silent Voice', [1, 2, 3, 4, 5], 'asdf', 'jkl', 'qwerty', 10)
-    dvd_4 = DVD('Fantastic Beasts and Where to Find Them', [1, 2, 3, 4, 5], 'asdf', 'jkl', 'qwerty', 10)
+    released_date = datetime.date.today()
+    dvd_2 = DVD('Interstellar', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10, released_date)
+    dvd_1 = DVD('Your Name', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10, released_date)
+    dvd_3 = DVD('A Silent Voice', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10, released_date)
+    dvd_4 = DVD('Fantastic Beasts and Where to Find Them', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10, released_date)
     dvds = DvDList()
     t1 = datetime.datetime.now()
     dvds.insert(dvd_2)
@@ -62,6 +62,8 @@ if __name__ == '__main__':
     dvds.insert(dvd_3)
     dvds.insert(dvd_4)
     t2 = datetime.datetime.now()
+    print(t1)
+    print(t2)
     print('Time taken to insert data', t2 - t1, '\n')
 
     print(dvds)
