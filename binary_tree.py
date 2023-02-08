@@ -19,27 +19,24 @@ class BST:
                 new_node = BSTNode(data)
                 self.root.right = new_node
 
-            current = self.root
-            while current.left is not None or current.right is not None:
-                if data < current.data:
-                    print(current)
-                    current = current.left
-                elif data > current.data:
-                    print(current)
-                    current = current.right
-                    print(current)
+            iterator = self.root
+            while iterator is not None:
+                current = iterator
+                if data < iterator.data:
+                    iterator = iterator.left
+                elif data > iterator.data:
+                    iterator = iterator.right
                 else:
                     return False
-            print("before", current.data)
             new_node = BSTNode(data)
             if data < current.data:
                 current.left = new_node
-                print("after", current.left.data)
             else:
                 current.right = new_node
-                print(new_node.data)
-                print("after", current.right.data)
 
+    def is_leaf(self, node):
+        if node.left is None and node.right is None:
+            return True
 
 
 
@@ -52,17 +49,24 @@ class BST:
 if __name__ == '__main__':
     bst = BST()
     bst.insert(10)
-    bst.insert(20)
+    bst.insert(15)
     bst.insert(5)
     bst.insert(6)
     bst.insert(7)
-    bst.insert(8)
-    bst.insert(9)
+    bst.insert(3)
+    bst.insert(2)
+    bst.insert(12)
+    bst.insert(13)
+    bst.insert(11)
     print('-'*10)
     print('BST')
     print(bst.root.data)
     print(bst.root.left.data)
     print(bst.root.right.data)
-    print(bst.root.left.left)
+    print(bst.root.left.data)
     print(bst.root.left.right.data)
+    print(bst.root.left.right.right.data)
+    print(bst.root.left.left.left.data)
+    print(bst.root.right.left.right.data)
+    print(bst.root.right.left.left.data)
 
