@@ -7,12 +7,13 @@ class Queue:
         self.queue.append(data)
 
     def dequeue(self):
-        self.queue.pop(0)
+        item = self.queue.pop(0)
+        return item
 
     def peek(self):
         return self.queue[0]
 
-    def is_null(self):
+    def is_empty(self):
         if len(self.queue) == 0:
             return True
         else:
@@ -25,8 +26,8 @@ class Queue:
 
     def __str__(self):
         output = ''
-        for q in self.queue:
-            output += str(q) + '\t'
+        for item in self.queue:
+            output += str(item) + '\t'
         return output
 
 if __name__ == '__main__':
@@ -37,11 +38,11 @@ if __name__ == '__main__':
     q.enqueue(4)
     q.enqueue(5)
     q.enqueue(6)
-    print(q.is_null())
+    print(q.is_empty())
     print(q.is_full())
     print(q)
     print(q.queue_size())
-    q.dequeue()
+    print(q.dequeue())
     print(q.queue_size())
     print(q)
     print(q.peek())

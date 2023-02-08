@@ -6,3 +6,9 @@ class BSTNode:
         self.left = None
         self.right = None
         self.data = data
+
+    def get_left(self):
+        return self.left
+
+    def get_right(self):
+        return self.right
