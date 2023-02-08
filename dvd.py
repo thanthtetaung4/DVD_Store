@@ -1,7 +1,7 @@
 class DVD:
     def __init__(self, movie_name, stars, producer, director, company, copies, released_date):
         self.movie_name = movie_name
-        self.stars = stars # list of actors in the movie
+        self.stars = stars  # list of actors in the movie
         self.producer = producer
         self.director = director
         self.company = company
@@ -38,7 +38,7 @@ class DVD:
 
     def set_popularity(self, popularity):
         self.popularity = popularity
-        
+
     def set_movie_name(self, movie_name):
         self.movie_name = movie_name
 
@@ -56,7 +56,7 @@ class DVD:
 
     def set_copies(self, copies):
         self.copies = copies
-        
+
     def __str__(self):
         stars = ''
         for star in self.stars:

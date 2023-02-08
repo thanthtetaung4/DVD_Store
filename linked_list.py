@@ -11,7 +11,6 @@ class LinkedList:
         if self.head is None:
             self.head = Node(data)
         else:
-
             if self.head.next is None:
                 new_node = Node(data)
                 self.head.next = new_node
