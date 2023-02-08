@@ -2,7 +2,7 @@ from customer import Customer
 
 
 class BSTNode:
-    def __init__(self, customer):
+    def __init__(self, data):
         self.left = None
         self.right = None
-        self.data = customer
+        self.data = data
