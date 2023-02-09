@@ -46,10 +46,34 @@ class BST:
 
     def find_max(self, root):
 
-        while root is not self.is_leaf(root):
+        current = None
+        while root is not self.is_leaf(root.data):
+            current = root
+            if self.is_leaf(current.data):
+                return current.data
+            root = root.right
+        return root
+
+    def find_mini(self, root):
+
+        current = None
+        while root is not self.is_leaf(root.data):
+            current = root
+            if self.is_leaf(current.data):
+                return current.data
             root = root.left
         return root
 
+    def get_node(self, data):
+        root = self.root
+        while root is not None:
+            if data == root.data:
+                return root
+            elif data < root.data:
+                root = root.left
+            else:
+                root = root.right
+        return False
 
     def level_order_traverse(self):
         if self.root is None:
@@ -67,6 +91,7 @@ class BST:
             if node.right is not None:
                 q.enqueue(node.right)
         return result
+
 
     def in_order_traverse(self, root, result):
         if not root:
@@ -116,5 +141,11 @@ if __name__ == '__main__':
         s += str(i.data) + '\t'
     print(s)
     print(bst.is_leaf(17))
+    node = bst.get_node(5)
+    print(node.data)
+    print(bst.find_max(node))
+    print(bst.find_mini(node))
+
+
 
 
