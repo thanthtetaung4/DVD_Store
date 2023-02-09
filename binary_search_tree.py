@@ -2,6 +2,7 @@ from customer import Customer
 from bstnode import BSTNode
 from queue import Queue
 
+
 class BST:
     def __init__(self):
         self.root = None
@@ -85,6 +86,7 @@ class BST:
         #         current = root
         #         if node == current:
         pass
+
     def level_order_traverse(self):
         if self.root is None:
             return False
@@ -101,7 +103,6 @@ class BST:
             if node.right is not None:
                 q.enqueue(node.right)
         return result
-
 
     def in_order_traverse(self, root, result):
         if not root:
@@ -133,7 +134,7 @@ if __name__ == '__main__':
     bst.insert(13)
     bst.insert(11)
     bst.insert(17)
-    print('-'*10)
+    print('-' * 10)
     print('BST')
     print(bst.root.data)
     print(bst.root.left.data)
@@ -155,7 +156,3 @@ if __name__ == '__main__':
     print(node.data)
     print(bst.find_max(node))
     print(bst.find_mini(node))
-
-
-
-

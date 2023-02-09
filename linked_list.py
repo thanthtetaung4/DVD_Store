@@ -48,7 +48,7 @@ class LinkedList:
                         current_index += 1
 
     # remove data from linked list at input index
-    def remove(self, index):
+    def remove_index(self, index):
         if 0 < index > self.get_size() - 1:
             print("Index out of bound")
             return 0
@@ -72,6 +72,23 @@ class LinkedList:
                         prev_node = current_node
                         current_node = current_node.next
                         current_index += 1
+
+    def remove_value(self, value):
+        if self.head.data == value:
+            self.head = self.head.next
+        else:
+            prev_node = self.head
+            current = self.head.next
+            while current is not None:
+                if current.data == value:
+                    prev_node.next = current.next
+                    current.next = None
+                    return True
+                else:
+                    prev_node = current
+                    current = current.next
+            return False
+
 
     # get data from linked list at input index
     def get_item(self, index):
@@ -124,10 +141,20 @@ if __name__ == '__main__':
     ll.insert("node 4")
     ll.insert("node 5")
     print(ll)
-    ll.remove(0)
+    ll.remove_index(0)
     ll.insert_at(1, "new node")
     print(f"Size is : {ll.get_size()}")
     print(ll)
     ll.insert_at(0, 'new head')
     print(f"Size is : {ll.get_size()}")
+    print(ll)
+    ll.remove_value('node 5')
+    print(ll)
+    ll.remove_value('new head')
+    print(ll)
+    ll.remove_value('node 2')
+    print(ll)
+    ll.remove_value('node 3')
+    print(ll)
+    ll.remove_value('node 5')
     print(ll)

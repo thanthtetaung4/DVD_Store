@@ -32,6 +32,10 @@ def main():
     name3 = 'Thant Htet Aungh'
     print(name < name3)
 
+    [a, b] = 1
+    print(a)
+    print(b)
+
 
 if __name__ == '__main__':
     main()
