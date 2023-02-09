@@ -75,6 +75,16 @@ class BST:
                 root = root.right
         return False
 
+    def delete_node(self, node):
+        # root = self.root
+        # if root is None:
+        #     return False
+        # else:
+        #     current = None
+        #     while root is not None:
+        #         current = root
+        #         if node == current:
+        pass
     def level_order_traverse(self):
         if self.root is None:
             return False
