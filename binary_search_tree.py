@@ -78,55 +78,62 @@ class BST:
 
     def delete_node(self, node):
         root = self.root
-        if root.data == node.data:
+        if self.root.data == node.data:
             prev = self.parent_of_node(self.find_max(self.root.left))
-            print("prev of biggest", prev.data)
+            # print("prev of biggest", prev.data)
             biggest_in_left = self.find_max(self.root.left)
-            print("biggest", biggest_in_left.data)
+            # print("biggest", biggest_in_left.data)
             if self.root.left == biggest_in_left and self.is_leaf(biggest_in_left.data):
-                print('in if')
+                # print('in if')
                 self.root = biggest_in_left
                 self.root.left = None
                 self.root.right = root.right
             elif self.root.left == biggest_in_left:
-                print('here')
+                # print('here')
                 self.root = biggest_in_left
                 if biggest_in_left.left is not None:
                     self.root.left = biggest_in_left.left
                     self.root.right = root.right
             else:
                 self.root = biggest_in_left
-                print('in else')
+                # print('in else')
                 self.root.left = root.left
                 self.root.right = root.right
-                if biggest_in_left.data == prev.left.data:
+                if prev.left is not None and biggest_in_left.data == prev.left.data:
                     prev.left = None
-                elif biggest_in_left.data == prev.right.data:
+                elif prev.right is not None and biggest_in_left.data == prev.right.data:
                     prev.right = None
 
         else:
             while root is not None:
                 current = root
                 if node.data == current.data:
-                    print('equal')
-                    print(current.data)
+                    # print('equal')
+                    # print(current.data)
                     biggest_in_left = self.find_max(current.left)
-                    prev_biggest = self.parent_of_node(biggest_in_left)
-                    prev_current = self.parent_of_node(current)
-                    current = self.find_max(current.left)
-                    print(biggest_in_left.data)
-
-                    print(prev_biggest.data)
-                    print(current.data)
-                    print(prev_current.data)
-                    prev_biggest.right = None  # remove the previous node of the biggest node in the left sub-tree
-                    current.left = root.left
-                    current.right = root.right
-                    if prev_current.left.data == root.data:
+                    if biggest_in_left.data == current.left.data:
+                        prev_current = self.parent_of_node(current)
+                        right = current.right
+                        current = biggest_in_left
                         prev_current.left = current
-                    elif prev_current.right.data == root.data:
-                        prev_current.right = current
-                    return True
+                        current.right = right
+                        return True
+                    else:
+                        prev_biggest = self.parent_of_node(biggest_in_left)
+                        prev_current = self.parent_of_node(current)
+                        current = self.find_max(current.left)
+                        # print(biggest_in_left.data)
+                        # print(prev_biggest.data)
+                        # print(current.data)
+                        # print(prev_current.data)
+                        prev_biggest.right = None  # remove the previous node of the biggest node in the left sub-tree
+                        current.left = root.left
+                        current.right = root.right
+                        if prev_current.left.data == root.data:
+                            prev_current.left = current
+                        elif prev_current.right.data == root.data:
+                            prev_current.right = current
+                        return True
                 elif node.data < root.data:
                     root = root.left
                 else:
@@ -156,7 +163,6 @@ class BST:
         result = []
         while not q.is_empty():
             node = q.dequeue()
-            print(node.data)
             result.append(node)
             if node.left is not None:
                 q.enqueue(node.left)
@@ -196,50 +202,39 @@ if __name__ == '__main__':
     bst.insert(17)
     print('-' * 10)
     print('BST')
-    print(bst.root.data)
-    print(bst.root.left.data)
-    print(bst.root.right.data)
-    print(bst.root.left.data)
-    print(bst.root.left.right.data)
-    print(bst.root.left.right.right.data)
-    print(bst.root.left.left.left.data)
-    print(bst.root.right.left.right.data)
-    print(bst.root.right.left.left.data)
     print(bst)
-    dummy_list = bst.level_order_traverse()
-    s = ''
-    for i in dummy_list:
-        s += str(i.data) + '\t'
-    print(s)
-    print(bst.is_leaf(17))
-    node = bst.get_node(5)
-    print(node.data)
-    print(bst.find_max(node).data)
-    print(bst.find_mini(node).data)
-    node = bst.get_node(10)
-    print(node.data)
-    print('-' * 10)
-    # bst.delete_node(node)
     # dummy_list = bst.level_order_traverse()
     # s = ''
     # for i in dummy_list:
     #     s += str(i.data) + '\t'
     # print(s)
-    #
-    # print(bst)
-    #
-    # node = bst.get_node(5)
-    # print(node.data)
-    # print('-' * 10)
-    # bst.delete_node(node)
-    # dummy_list = bst.level_order_traverse()
-    # s = ''
-    # for i in dummy_list:
-    #     s += str(i.data) + '\t'
-    # print(s)
-    #
-    # print(bst)
 
+    print('-' * 10)
+    print('Deletion Test')
+    display = 'For BST'
+    print(f'{display:-^15}\nOriginal BST is \n{bst}')
+    node = bst.get_node(10)
+    print(f'{node.data} is to be deleted')
+    bst.delete_node(node)
+    # dummy_list = bst.level_order_traverse()
+    # s = ''
+    # for i in dummy_list:
+    #     s += str(i.data) + '\t'
+    # print(s)
+    print(bst)
+
+    node = bst.get_node(5)
+    print(f'{node.data} is the node to be deleted')
+    bst.delete_node(node)
+    # dummy_list = bst.level_order_traverse()
+    # s = ''
+    # for i in dummy_list:
+    #     s += str(i.data) + '\t'
+    # print(s)
+    print(bst)
+    print('-' * 30)
+    display = 'For BST 2'
+    print(f'{display:-^15}')
     bst_2 = BST()
     bst_2.insert(10)
     bst_2.insert(5)
@@ -249,9 +244,7 @@ if __name__ == '__main__':
     bst_2.insert(11)
     bst_2.insert(17)
     bst_2.insert(6)
-    bst_2.insert(4)
     print(bst_2)
-
     bst_2.delete_node(bst_2.get_node(5))
 
     print(bst_2)
