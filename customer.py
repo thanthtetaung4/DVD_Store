@@ -34,6 +34,9 @@ class Customer:
     def set_dvd_list(self, dvd_list):
         self.dvd_list = dvd_list
 
+    def __lt__(self, other):
+        return self.get_account_number() < other.get_account_number()
+
     def __str__(self):
         dvds = ''
         for dvd in self.dvd_list:
@@ -47,4 +50,6 @@ class Customer:
 
 if __name__ == '__main__':
     customer = Customer("fname", "lname", "123456", ['dvd1', 'dvd2', 'dvd3'])
+    customer2 = Customer("fname1", "lname2", "123457", ['dvd1', 'dvd2', 'dvd3'])
+    print(customer2 > customer)
     print(customer)

@@ -1,5 +1,8 @@
-class CustomerList():
+class CustomerList:
     def __init__(self):
+        pass
+
+    def insert(self, customer):
         pass
 
     def get_customer(self, customer_name):
