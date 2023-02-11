@@ -48,10 +48,11 @@ class BST:
     def find_max(self, root):
 
         current = None
-        # print(1)
+
         while root is not None and root is not self.is_leaf(root.data):
             # print(1)
             current = root
+            # print(current.data)
             if self.is_leaf(current.data):
                 return current
             root = root.right
@@ -80,6 +81,7 @@ class BST:
 
     def delete_node(self, node):
         root = self.root
+
         if self.root.data == node.data:
             prev = self.parent_of_node(self.find_max(self.root.left))
             # print("prev of biggest", prev.data)
@@ -111,26 +113,34 @@ class BST:
                 current = root
                 if node.data == current.data:
                     if self.is_leaf(current.data):
-                        # print('asdf')
+                        print('is leaf')
                         prev_current = self.parent_of_node(current)
-                        if prev_current.left.data is not None and prev_current.left.data == current.data:
+                        # print(current.data)
+                        if prev_current.left is not None and prev_current.left.data == current.data:
                             prev_current.left = None
-                        elif prev_current.right.data is not None and prev_current.right.data == current.data:
+                        elif prev_current.right is not None and prev_current.right.data == current.data:
                             prev_current.right = None
                         return True
                     # print('equal')
                     # print(current.data)
                     else:
+                        # print('else')
                         biggest_in_left = self.find_max(current.left)
                         # print(biggest_in_left)
                         if biggest_in_left.data == current.left.data:
+                            # print('biggest is current')
                             prev_current = self.parent_of_node(current)
                             right = current.right
+                            deleted_node_data = current.data
                             current = biggest_in_left
-                            prev_current.left = current
+                            if prev_current.left is not None and prev_current.left.data == deleted_node_data:
+                                prev_current.left = current
+                            elif prev_current.right is not None and prev_current.right.data == deleted_node_data:
+                                prev_current.right = current
                             current.right = right
                             return True
                         else:
+                            # print('idk')
                             prev_biggest = self.parent_of_node(biggest_in_left)
                             prev_current = self.parent_of_node(current)
                             current = self.find_max(current.left)
@@ -257,7 +267,11 @@ if __name__ == '__main__':
     bst_2.insert(17)
     bst_2.insert(6)
     print(bst_2)
+
     bst_2.delete_node(bst_2.get_node(5))
-    bst_2.delete_node(bst_2.get_node(11))
+    print(bst_2)
+    print('-'*30)
+    bst_2.delete_node(bst_2.get_node(17))
 
     print(bst_2)
+
