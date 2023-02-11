@@ -35,7 +35,17 @@ class Customer:
         self.dvd_list = dvd_list
 
     def __lt__(self, other):
+        if type(other) is str:
+            return self.get_account_number() < other
         return self.get_account_number() < other.get_account_number()
+    def __gt__(self, other):
+        if type(other) is str:
+            return self.get_account_number() > other
+        return self.get_account_number() > other.get_account_number()
+    def __eq__(self, other):
+        if type(other) is str:
+            return self.get_account_number() == other
+        return self.get_account_number() == other.get_account_number()
 
     def __str__(self):
         dvds = ''
@@ -50,6 +60,8 @@ class Customer:
 
 if __name__ == '__main__':
     customer = Customer("fname", "lname", "123456", ['dvd1', 'dvd2', 'dvd3'])
-    customer2 = Customer("fname1", "lname2", "123457", ['dvd1', 'dvd2', 'dvd3'])
-    print(customer2 > customer)
+    customer2 = Customer("fname", "lname", "123457", ['dvd1', 'dvd2', 'dvd3'])
+    print('123458' > customer2)
+    number = '123457'
+    print(number == customer2)
     print(customer)
