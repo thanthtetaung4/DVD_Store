@@ -239,9 +239,28 @@ class Manager():
     def delete_dvd(self):
         dvd_id = input("Enter ID of DVD you want to delete:\t")
         self.dvds.delete_dvd(dvd_id)
+        query = "DELETE FROM dvd where dvd_id = '" + dvd_id + "';"
+        con = sqlite3.connect(r"database/dvd_store.db")
+        cur = con.cursor()
+        cur.execute(query)
+        if input('ARE YOU SURE ABOUT DELETING A DVD FROM DATABASE ? Input 1!\t') == '1':
+            print('Deleted to DB!')
+            con.commit()
+        con.close()
+
 
     def delete_customer(self):
-        self.customers.delete_cutomer(input("Enter Account Number of customer you want to delete:\t"))
+        account_number = input("Enter Account Number of customer you want to delete:\t")
+        self.customers.delete_cutomer(account_number)
+        query = "DELETE FROM customer where account_number = '" + account_number + "';"
+        con = sqlite3.connect(r"database/dvd_store.db")
+        cur = con.cursor()
+        cur.execute(query)
+        if input('ARE YOU SURE ABOUT DELETING A DVD FROM DATABASE ? Input 1!\t') == '1':
+            print('Deleted to DB!')
+            con.commit()
+        con.close()
+
 
     def add_customer(self):
         fname = input("Enter first name\n")

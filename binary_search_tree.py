@@ -113,7 +113,7 @@ class BST:
                 current = root
                 if node.data == current.data:
                     if self.is_leaf(current.data):
-                        print('is leaf')
+                        # print('is leaf')
                         prev_current = self.parent_of_node(current)
                         # print(current.data)
                         if prev_current.left is not None and prev_current.left.data == current.data:
