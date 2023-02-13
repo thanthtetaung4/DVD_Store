@@ -36,7 +36,7 @@ def main():
             elif option == '6':
                 manager.delete_customer()
             elif option == '7':
-                manager.find_dvds_rented_by_customer_admin()
+                print(manager.find_dvds_rented_by_customer_admin())
             else:
                 print('Wrong Input!')
 
