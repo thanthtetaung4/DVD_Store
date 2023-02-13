@@ -1,5 +1,6 @@
 class DVD:
-    def __init__(self, movie_name, stars, producer, director, company, copies, released_date):
+    def __init__(self, dvd_id, movie_name, stars, producer, director, company, copies, released_date):
+        self.dvd_id = dvd_id
         self.movie_name = movie_name
         self.stars = stars  # list of actors in the movie
         self.producer = producer
@@ -8,7 +9,8 @@ class DVD:
         self.copies = copies
         self.popularity = None
         self.released_date = released_date
-
+    def get_dvd_id(self):
+        return self.dvd_id
     def get_movie_name(self):
         return self.movie_name
 
@@ -56,12 +58,14 @@ class DVD:
 
     def set_copies(self, copies):
         self.copies = copies
-
+    def __eq__(self, other):
+        return self.dvd_id == other
     def __str__(self):
         stars = ''
         for star in self.stars:
             stars += star + '\t'
-        output = f"Movie Name: {self.movie_name}\n" \
+        output = f"DVD_ID: {self.dvd_id}\n" \
+                 f"Movie Name: {self.movie_name}\n" \
                  f"Stars: {stars}\n" \
                  f"Producer: {self.producer}\n" \
                  f"Director: {self.director}\n" \
@@ -73,5 +77,7 @@ class DVD:
 
 
 if __name__ == '__main__':
-    dvd_1 = DVD('a', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10)
+    dvd_1 = DVD('dvd_001','a', ["1", "2", "3", "4", "5"], 'asdf', 'jkl', 'qwerty', 10, 'sadf')
     print(dvd_1)
+    id = 'dvd_001'
+    print(dvd_1 == id)

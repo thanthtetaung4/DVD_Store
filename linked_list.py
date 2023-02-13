@@ -91,15 +91,27 @@ class LinkedList:
 
 
     # get data from linked list at input index
-    def get_item(self, index):
-        if index > self.get_size() or index < 0:
-            return False
+    def get_item_index(self, index):
+        if index > self.get_size()-1 or index < 0:
+            return None
         else:
             current_node = self.head
-            while index > -1 and current_node.next is not None:
+
+            while index > 0 and current_node is not None:
                 current_node = current_node.next
                 index -= 1
             return current_node.data
+
+    def get_item_value(self, value):
+        if self.head.data == value:
+            return self.head.value
+        else:
+            while current is not None:
+                if current.data == value:
+                    return current
+                else:
+                    current = current.next
+            return None
 
     # return the size
     def get_size(self):
@@ -158,3 +170,4 @@ if __name__ == '__main__':
     print(ll)
     ll.remove_value('node 5')
     print(ll)
+    print(ll.get_size())

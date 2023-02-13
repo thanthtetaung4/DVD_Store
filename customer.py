@@ -38,29 +38,30 @@ class Customer:
         if type(other) is str:
             return self.get_account_number() < other
         return self.get_account_number() < other.get_account_number()
+
     def __gt__(self, other):
         if type(other) is str:
             return self.get_account_number() > other
         return self.get_account_number() > other.get_account_number()
+
     def __eq__(self, other):
         if type(other) is str:
             return self.get_account_number() == other
         return self.get_account_number() == other.get_account_number()
 
     def __str__(self):
-        dvds = ''
-        for dvd in self.dvd_list:
-            dvds += f"{dvd} "
         output = f"First Name: {self.fist_name}\n" \
                  f"Last Name: {self.last_name}\n" \
                  f"Account Number: {self.account_number}\n" \
-                 f"DVD List: {dvds}\n"
+                 f"Rented DVD List: {self.dvd_list}\n"
         return output
 
 
 if __name__ == '__main__':
-    customer = Customer("fname", "lname", "123456", ['dvd1', 'dvd2', 'dvd3'])
-    customer2 = Customer("fname", "lname", "123457", ['dvd1', 'dvd2', 'dvd3'])
+    customer = Customer("fname", "lname", "123456",
+                        {'dvd_00001': '11/2/2023', 'dvd_00002': '11/2/2023', 'dvd_00003': '11/2/2023'})
+    customer2 = Customer("fname", "lname", "123457",
+                         {'dvd_00001': '11/2/2023', 'dvd_00002': '11/2/2023', 'dvd_00003': '11/2/2023'})
     print('123458' > customer2)
     number = '123457'
     print(number == customer2)

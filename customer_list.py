@@ -12,10 +12,11 @@ class CustomerList:
         pass
     def find_max(self, account_number):
         return self.customer_list.find_max(account_number)
-    def remove(self, account_name):
+    def delete_cutomer(self, account_name):
         # remove a customer that has {customer_name} as name
         self.customer_list.delete_node(self.find_customer(account_name))
-
+    def lvl_order(self):
+        return self.customer_list.level_order_traverse()
     def find_customer(self, account_number):
         return self.customer_list.get_node(account_number)
         # root = self.customer_list.root
@@ -59,5 +60,5 @@ if __name__ == '__main__':
     # print(customer_list.find_customer('012').data)
     # print(customer_list.find_max(customer_list.find_customer('010')).data)
     print('='*20)
-    customer_list.remove('015')
+    customer_list.delete_cutomer('015')
     print(customer_list)
