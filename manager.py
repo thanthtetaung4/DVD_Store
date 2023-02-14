@@ -256,6 +256,8 @@ class Manager():
         con = sqlite3.connect(r"database/dvd_store.db")
         cur = con.cursor()
         cur.execute(query)
+        query = "DELETE FROM user_account where account_number = '" + account_number + "';"
+        cur.execute(query)
         if input('ARE YOU SURE ABOUT DELETING A DVD FROM DATABASE ? Input 1!\t') == '1':
             print('Deleted to DB!')
             con.commit()
@@ -270,6 +272,8 @@ class Manager():
         query = "insert into customer (first_name, last_name, account_number) values ('" + fname + "','" + lname + "','" + account_number + "');"
         con = sqlite3.connect(r"database/dvd_store.db")
         cur = con.cursor()
+        cur.execute(query)
+        query = "insert into user_account (account_number, password) values ('"+ account_number + "', 12345);"
         cur.execute(query)
         if input('ARE YOU SURE ABOUT ADDING TO DATABASE ? Input 1!\t') == '1':
             print('Added to DB!')
@@ -290,6 +294,8 @@ class Manager():
         for value in dvd_list.values():
             values.append(value)
         dvds_rented_by_customer = ''
+        if len(keys) == 0:
+            return 'No DVD rented\n'
         for i in range(len(keys)):
             dvd_name = self.dvds.find_at(i).get_movie_name()
             dvds_rented_by_customer += dvd_name + " due at " + str(values[i]) + "\n"
@@ -304,6 +310,8 @@ class Manager():
         for value in dvd_list.values():
             values.append(value)
         dvds_rented_by_customer = ''
+        if len(keys) == 0:
+            return 'No DVD rented\n'
         for i in range(len(keys)):
             dvd_name = self.dvds.find_at(i).get_movie_name()
             dvds_rented_by_customer += dvd_name + " due at " + str(values[i]) + "\n"
