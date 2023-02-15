@@ -343,7 +343,7 @@ class Manager:
         return str(normal_fee) + '$'
 
     def get_due_soon(self):
-        msg = 'Due Soon\n'
+        msg = 'Due Soon'
 
         for customer in self.customers.convert_to_list():
             customer_dvd_list = customer.get_dvd_list()
@@ -353,11 +353,11 @@ class Manager:
                 for key in customer_dvd_list.keys():
                     if (datetime.date.today() - customer_dvd_list[key]).days > 4:
                         if count == 0:
-                            msg += '\n' + customer.get_name()
+                            msg += '\n\n' + customer.get_name()
                             count += 1
                         for dvd in self.dvds.convert_to_list():
                             if dvd.data.get_dvd_id() == key:
-                                 msg += '\n' + dvd.data.get_movie_name() + ' due at ' + str(customer_dvd_list[key] + datetime.timedelta(days=7))
+                                 msg += '\n"' + dvd.data.get_movie_name() + '" due at ' + str(customer_dvd_list[key] + datetime.timedelta(days=7))
         return msg + '\n'
 
 if __name__ == '__main__':
