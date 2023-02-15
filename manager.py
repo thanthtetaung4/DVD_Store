@@ -1,7 +1,9 @@
+import datetime
+
 from dvd_list import *
 from customer_list import *
 import sqlite3
-
+import re
 
 def dvd_dict_maker(dvd_renting_details):
     dvd_detail = ''
@@ -56,7 +58,7 @@ def dvd_dict_maker(dvd_renting_details):
     return dvd_dict
 
 
-class Manager():
+class Manager:
     def __init__(self):
         self.dvds = DvDList()
         self.customers = CustomerList()
@@ -121,7 +123,7 @@ class Manager():
         return True
 
     def dvd_return(self, account_number, customers, dvds):
-        rented_dvd = dvds.find_dvd(input("Enter dvd name you want to return: "))
+        rented_dvd = dvds.find_dvd_customer(input("Enter dvd name you want to return: "))
         # print(rented_dvd)
         try:
             dvd_id = rented_dvd.get_dvd_id()
@@ -156,7 +158,7 @@ class Manager():
         return 'You did not rent that movie!'
 
     def dvd_rent(self, dvd_name, dvds, account_number, customers):
-        rented_dvd = dvds.find_dvd(dvd_name)
+        rented_dvd = dvds.find_dvd_customer(dvd_name)
         print()
         if rented_dvd.get_copies() < 1:
             return f"Sorry we have no copy left for {dvd_name}!"
@@ -248,7 +250,6 @@ class Manager():
             con.commit()
         con.close()
 
-
     def delete_customer(self):
         account_number = input("Enter Account Number of customer you want to delete:\t")
         self.customers.delete_cutomer(account_number)
@@ -263,7 +264,6 @@ class Manager():
             con.commit()
         con.close()
 
-
     def add_customer(self):
         fname = input("Enter first name\n")
         lname = input("Enter last name\n")
@@ -273,16 +273,33 @@ class Manager():
         con = sqlite3.connect(r"database/dvd_store.db")
         cur = con.cursor()
         cur.execute(query)
-        query = "insert into user_account (account_number, password) values ('"+ account_number + "', 12345);"
+        query = "insert into user_account (account_number, password) values ('" + account_number + "', 12345);"
         cur.execute(query)
         if input('ARE YOU SURE ABOUT ADDING TO DATABASE ? Input 1!\t') == '1':
             print('Added to DB!')
             con.commit()
         con.close()
 
-    def find_dvd(self):
+    def find_dvd_customer(self):
+        dvd_name = input("Enter DVD name you want to search:\t")
+        temp = re.split('\n',self.dvds.find_dvd(dvd_name).__str__())
+        temp.pop(0)
+        dvd_detail = ''
+        for line in temp:
+            dvd_detail += line + '\n'
+        return dvd_detail
+
+    def find_dvd_admin(self):
         dvd_name = input("Enter DVD name you want to search:\t")
         return self.dvds.find_dvd(dvd_name)
+    def customer_dvd_inter(self, dvd):
+        temp = re.split('\n', dvd.__str__())
+        temp.pop(0)
+        dvd_detail = ''
+        for line in temp:
+            dvd_detail += line + '\n'
+        return dvd_detail
+
 
     def find_dvds_rented_by_customer_admin(self):
         account_number = input('Enter account number:\t')
@@ -298,7 +315,7 @@ class Manager():
             return 'No DVD rented\n'
         for i in range(len(keys)):
             dvd_name = self.dvds.find_at(i).get_movie_name()
-            dvds_rented_by_customer += dvd_name + " due at " + str(values[i]) + "\n"
+            dvds_rented_by_customer += dvd_name + " due at " + str(values[i] + datetime.timedelta(days=7)) + "\n"
         return dvds_rented_by_customer
 
     def find_dvds_rented_by_customer_user(self, account_number):
@@ -314,7 +331,7 @@ class Manager():
             return 'No DVD rented\n'
         for i in range(len(keys)):
             dvd_name = self.dvds.find_at(i).get_movie_name()
-            dvds_rented_by_customer += dvd_name + " due at " + str(values[i]) + "\n"
+            dvds_rented_by_customer += dvd_name + " due at " + str(values[i] + datetime.timedelta(days=7)) + "\n"
         return dvds_rented_by_customer
 
     def fee_calculator(self, days):
@@ -325,6 +342,23 @@ class Manager():
             return str(round(total_fee, 2)) + '$'
         return str(normal_fee) + '$'
 
+    def get_due_soon(self):
+        msg = 'Due Soon\n'
+
+        for customer in self.customers.convert_to_list():
+            customer_dvd_list = customer.get_dvd_list()
+
+            if len(customer_dvd_list) > 0:
+                count = 0
+                for key in customer_dvd_list.keys():
+                    if (datetime.date.today() - customer_dvd_list[key]).days > 4:
+                        if count == 0:
+                            msg += '\n' + customer.get_name()
+                            count += 1
+                        for dvd in self.dvds.convert_to_list():
+                            if dvd.data.get_dvd_id() == key:
+                                 msg += '\n' + dvd.data.get_movie_name() + ' due at ' + str(customer_dvd_list[key] + datetime.timedelta(days=7))
+        return msg + '\n'
 
 if __name__ == '__main__':
     manager = Manager()

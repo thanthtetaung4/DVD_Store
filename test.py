@@ -37,18 +37,20 @@ def main():
     print(a)
     print(b)
 
-    con = sqlite3.connect(r"C:\sqlite\customer.db")
-    cur = con.cursor()
-    # cur.execute("CREATE TABLE movie(title, year, score)")
-    # res = cur.execute("SELECT name FROM sqlite_master")
-    # print(res.fetchone())
-    cur.execute("""
-        INSERT INTO movie VALUES
-            ('a', 1975, 8.2),
-            ('b', 1971, 7.5)
-    """)
-    con.commit()
-    res = cur.execute("SELECT * FROM movie")
-    print(res.fetchall())
+    # con = sqlite3.connect(r"C:\sqlite\customer.db")
+    # cur = con.cursor()
+    # # cur.execute("CREATE TABLE movie(title, year, score)")
+    # # res = cur.execute("SELECT name FROM sqlite_master")
+    # # print(res.fetchone())
+    # cur.execute("""
+    #     INSERT INTO movie VALUES
+    #         ('a', 1975, 8.2),
+    #         ('b', 1971, 7.5)
+    # """)
+    # con.commit()
+    # res = cur.execute("SELECT * FROM movie")
+    # print(res.fetchall())
 if __name__ == '__main__':
-    main()
+    print(True)
+
+

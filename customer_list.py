@@ -28,7 +28,10 @@ class CustomerList:
         #     else:
         #         root = root.right
         # return None
-
+    def convert_to_list(self):
+        result = []
+        self.customer_list.in_order_traverse(self.customer_list.root,result)
+        return result
     def update(self, customer_name):
         # update a customer that has {customer_name} as name with prompts to choose what file to change
         pass

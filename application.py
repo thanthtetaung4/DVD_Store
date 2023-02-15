@@ -18,6 +18,8 @@ def main():
                "5. Add Customer\n" \
                "6. Delete Customer\n" \
                "7. See DVDs rented by Customer\n" \
+               "8. Check DVD details\n" \
+               "9. Get Due Soon\n" \
                "'$' To Exit\n" \
                ">>>>>\t" \
 
@@ -37,6 +39,10 @@ def main():
                 manager.delete_customer()
             elif option == '7':
                 print(manager.find_dvds_rented_by_customer_admin())
+            elif option == '8':
+                print(manager.find_dvd_admin())
+            elif option == '9':
+                print(manager.get_due_soon())
             else:
                 print('Wrong Input!')
 
@@ -59,7 +65,7 @@ def main():
                 option_2 = input(menu_2)
                 while option_2 != '$':
                     if option_2 == '1':
-                        find_dvd = manager.find_dvd()
+                        find_dvd = manager.find_dvd_customer()
                         print(find_dvd)
                         menu_4 = "1 to rent\n" \
                                  "'$' to back to previous menu\n" \
@@ -81,7 +87,7 @@ def main():
                         while option_3 != '$':
                             try:
                                 if 0 < int(option_3) < dvds.get_dvd_list().get_size() + 1:
-                                    print(dvds.find_at(int(option_3) - 1))
+                                    print(manager.customer_dvd_inter(dvds.find_at(int(option_3) - 1)))
 
                                     menu_4 = "1 to rent\n" \
                                              "'$' to Back\n" \

@@ -56,6 +56,13 @@ class DvDList:
                 current_node = current_node.next
         return f"{dvd_name} is not in your store. Sorry for inconvenience :("
 
+    def convert_to_list(self):
+        dvds = []
+        current_node = self.dvd_list.head
+        while current_node is not None:
+            dvds.append(current_node)
+            current_node = current_node.next
+        return dvds
     def __str__(self):
         output = ""
         current_node = self.dvd_list.head

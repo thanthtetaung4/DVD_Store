@@ -2,7 +2,7 @@ import sqlite3
 import datetime
 from customer import Customer
 from customer_list import CustomerList
-
+import re
 
 def main():
     get_customers_from_db()
@@ -112,7 +112,11 @@ def get_customers_from_db():
     # for i in dummy_list:
     #     s += str(i.data) + '\n'
     # print(s)
-
+def search_in_str(strr):
+    search = re.split('\n',strr)
+    return search
 
 if __name__ == '__main__':
-    main()
+    print(True)
+    # main()
+    # t(search_in_str("asdf\njkl\nqwerty"))

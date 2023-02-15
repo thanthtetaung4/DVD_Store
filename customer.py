@@ -6,7 +6,7 @@ class Customer:
         self.dvd_list = dvd_list  # {dvd name : rented date} => dictionary
 
     def get_name(self):
-        return self.fist_name + self.last_name
+        return self.fist_name + ' ' +self.last_name
 
     def get_first_name(self):
         return self.fist_name

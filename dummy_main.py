@@ -59,7 +59,7 @@ def main():
                 option_2 = input(menu_2)
                 while option_2 != '$':
                     if option_2 == '1':
-                        find_dvd = manager.find_dvd()
+                        find_dvd = manager.find_dvd_customer()
                         print(find_dvd)
                         menu_4 = "1 to rent\n" \
                                  "'$' to back to previous menu\n"

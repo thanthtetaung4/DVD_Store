@@ -31,7 +31,7 @@ def main():
 
 
 def dvd_return(account_number, customers, dvds):
-    rented_dvd = dvds.find_dvd(input("Enter dvd name you want to return: "))
+    rented_dvd = dvds.find_dvd_customer(input("Enter dvd name you want to return: "))
     dvd_id = rented_dvd.get_dvd_id()
     customer = customers.find_customer(account_number)
     customer_rented_dvds = customer.data.get_dvd_list()
@@ -49,7 +49,7 @@ def dvd_return(account_number, customers, dvds):
 
 
 def dvd_rent(dvd_name, dvds, account_number, customers):
-    rented_dvd = dvds.find_dvd(dvd_name)
+    rented_dvd = dvds.find_dvd_customer(dvd_name)
     if rented_dvd.get_copies() < 1:
         print(f"Sorry we have no copy left for {dvd_name}!")
         return False
