@@ -199,6 +199,7 @@ class Manager:
         cur = con.cursor()
         cur_obj = cur.execute('select max(account_number) from customer')
         max_id = cur_obj.fetchone()
+        con.close()
         if int(max_id[0]) > 9999:
             return False
         elif max_id[0] == '0000':
@@ -212,11 +213,13 @@ class Manager:
         cur = con.cursor()
         cur_obj = cur.execute('select max(dvd_id) from dvd')
         max_id = cur_obj.fetchone()
-        con.close()
+
         if int(max_id[0][4:9]) > 9999:
+            con.close()
             return False
         else:
             new_id = str(int(max_id[0][4:9]) + 1)
+            con.close()
             return 'dvd_' + '0' * (5 - len(new_id)) + new_id
 
     def add_dvd(self):
@@ -228,46 +231,75 @@ class Manager:
         copies = (input("Enter Copies:\t"))
         released_date = input("Enter Released Date:\t")
         dvd_id = self.dvd_id_generator()
-        self.dvds.insert(DVD(dvd_id, movie_name, stars, producer, director, company, copies, released_date))
         query = "insert into dvd (movie_name, dvd_id, stars, producer, company, released_data, director, copies) values ('" + movie_name + "','" + dvd_id + "','" + stars + "','" + producer + "','" + company + "','" + released_date + "','" + director + "','" + copies + "');"
         con = sqlite3.connect(r"database/dvd_store.db")
         cur = con.cursor()
         cur.execute(query)
-        if input('ARE YOU SURE ABOUT ADDING TO DATABASE ? Input 1!\t') == '1':
-            print('Added to DB!')
-            con.commit()
+        if input('ARE YOU SURE ABOUT ADDING' + movie_name + ' TO DATABASE ? \nInput 1 To COMMIT\nInput any to STOP\n>>>>>\t') == '1':
+            print(movie_name + '\nAdded to DB!\n')
+            if self.dvds.insert(DVD(dvd_id, movie_name, stars, producer, director, company, copies, released_date)):
+                con.commit()
+            else:
+                print('unsuccessful\n')
+        else:
+            con.close()
+            return
         con.close()
 
     def delete_dvd(self):
         dvd_id = input("Enter ID of DVD you want to delete:\t")
-        self.dvds.delete_dvd(dvd_id)
-        query = "DELETE FROM dvd where dvd_id = '" + dvd_id + "';"
-        con = sqlite3.connect(r"database/dvd_store.db")
-        cur = con.cursor()
-        cur.execute(query)
-        if input('ARE YOU SURE ABOUT DELETING A DVD FROM DATABASE ? Input 1!\t') == '1':
-            print('Deleted to DB!')
-            con.commit()
-        con.close()
+        deleted_dvd = None
+        for dvd in self.dvds.convert_to_list():
+            if dvd.data.get_dvd_id() == dvd_id:
+                deleted_dvd = dvd
+        if deleted_dvd is not None:
+            query = "DELETE FROM dvd where dvd_id = '" + dvd_id + "';"
+            con = sqlite3.connect(r"database/dvd_store.db")
+            cur = con.cursor()
+            cur.execute(query)
+            if input('ARE YOU SURE ABOUT DELETING ' + deleted_dvd.data.get_movie_name() + ' FROM DATABASE ? \nInput 1 To COMMIT\nInput any to STOP\n>>>>>\t') == '1':
+                print(deleted_dvd.data.get_movie_name() + '\nDeleted from DB!')
+                self.dvds.delete_dvd(dvd_id)
+                con.commit()
+            else:
+                con.close()
+                return
+            con.close()
+        else:
+            print('DVD does not exist')
 
     def delete_customer(self):
         account_number = input("Enter Account Number of customer you want to delete:\t")
-        self.customers.delete_cutomer(account_number)
-        query = "DELETE FROM customer where account_number = '" + account_number + "';"
-        con = sqlite3.connect(r"database/dvd_store.db")
-        cur = con.cursor()
-        cur.execute(query)
-        query = "DELETE FROM user_account where account_number = '" + account_number + "';"
-        cur.execute(query)
-        if input('ARE YOU SURE ABOUT DELETING A DVD FROM DATABASE ? Input 1!\t') == '1':
-            print('Deleted to DB!')
-            con.commit()
-        con.close()
+        deleted_customer = None
+        for customer in self.customers.convert_to_list():
+            if customer.get_account_number() == str(account_number):
+                deleted_customer = customer
+        if deleted_customer is not None:
+            query = "DELETE FROM customer where account_number = '" + account_number + "';"
+            con = sqlite3.connect(r"database/dvd_store.db")
+            cur = con.cursor()
+            cur.execute(query)
+            query = "DELETE FROM user_account where account_number = '" + account_number + "';"
+            cur.execute(query)
+            if input('ARE YOU SURE ABOUT DELETING ' + deleted_customer.get_name() + ' FROM DATABASE ? \nInput 1 To COMMIT\nInput any to STOP\n>>>>>\t') == '1':
+                msg = 'Name:'+ deleted_customer.get_name() + '\nAccount Number:' + account_number + '\nis Deleted from DB!'
+                print(msg)
+                if self.customers.delete_cutomer(account_number):
+                    con.commit()
+                else:
+                    print('unsuccessful\n')
+            else:
+                con.close()
+                return
+            con.close()
+        else:
+            print('Customer does not exist')
 
     def add_customer(self):
         fname = input("Enter first name\n")
         lname = input("Enter last name\n")
         account_number = self.customer_id_generator()
+        new_customer = Customer(fname, lname, account_number, {})
         self.customers.insert(Customer(fname, lname, account_number, {}))
         query = "insert into customer (first_name, last_name, account_number) values ('" + fname + "','" + lname + "','" + account_number + "');"
         con = sqlite3.connect(r"database/dvd_store.db")
@@ -275,9 +307,12 @@ class Manager:
         cur.execute(query)
         query = "insert into user_account (account_number, password) values ('" + account_number + "', 12345);"
         cur.execute(query)
-        if input('ARE YOU SURE ABOUT ADDING TO DATABASE ? Input 1!\t') == '1':
-            print('Added to DB!')
+        if input('ARE YOU SURE ABOUT ADDING ' + new_customer.get_name() + ' TO DATABASE ? \nInput 1 To COMMIT\nInput any to STOP\n>>>>>\t') == '1':
+            print(new_customer.get_name() + '\nAdded to DB!')
             con.commit()
+        else:
+            con.close()
+            return
         con.close()
 
     def find_dvd_customer(self):

@@ -47,10 +47,10 @@ class BST:
 
     def find_max(self, root):
 
-        current = None
+        current = root
 
         while root is not None and root is not self.is_leaf(root.data):
-            # print(1)
+            print(1)
             current = root
             # print(current.data)
             if self.is_leaf(current.data):
@@ -60,7 +60,7 @@ class BST:
 
     def find_mini(self, root):
 
-        current = None
+        current = root
         while root is not None and root is not self.is_leaf(root.data):
             current = root
             if self.is_leaf(current.data):
@@ -92,12 +92,14 @@ class BST:
                 self.root = biggest_in_left
                 self.root.left = None
                 self.root.right = root.right
+                return True
             elif self.root.left == biggest_in_left:
                 # print('here')
                 self.root = biggest_in_left
                 if biggest_in_left.left is not None:
                     self.root.left = biggest_in_left.left
                     self.root.right = root.right
+                return True
             else:
                 self.root = biggest_in_left
                 # print('in else')
@@ -107,10 +109,13 @@ class BST:
                     prev.left = None
                 elif prev.right is not None and biggest_in_left.data == prev.right.data:
                     prev.right = None
-
+                return True
         else:
+            counter = 0
             while root is not None:
                 current = root
+                # print('hi')
+                # print(current.data)
                 if node.data == current.data:
                     if self.is_leaf(current.data):
                         # print('is leaf')
@@ -125,9 +130,22 @@ class BST:
                     # print(current.data)
                     else:
                         # print('else')
+
                         biggest_in_left = self.find_max(current.left)
-                        # print(biggest_in_left)
-                        if biggest_in_left.data == current.left.data:
+
+                        if biggest_in_left is None:
+                            # print('biggest in left in none',current.data)
+
+                            prev_current = self.parent_of_node(current)
+                            # print(prev_current.data)
+                            if prev_current.right is not None and prev_current.right == current:
+                                prev_current.right = current.right
+                                current.right = None
+                            elif prev_current.left is not None and prev_current.left == current:
+                                prev_current.left = current.right
+                                current.right = None
+                            return True
+                        elif biggest_in_left.data == current.left.data:
                             # print('biggest is current')
                             prev_current = self.parent_of_node(current)
                             right = current.right
@@ -158,13 +176,17 @@ class BST:
                             return True
                 elif node.data < root.data:
                     root = root.left
+                    counter += 1
                 else:
                     root = root.right
+                    counter += 1
+        return False
 
     def parent_of_node(self, node):
         root = self.root
         while root is not None:
             current = root
+            # print(current.data)
             if current.left is not None and current.left.data == node.data:
                 return current
             elif current.right is not None and current.right.data == node.data:
@@ -199,6 +221,13 @@ class BST:
         result.append(root.data)
         self.in_order_traverse(root.right, result)
         ''' The reason why I use recursive is iterative will also cost Time => O(n) and Space => O(n)'''
+
+    def iod_print(self):
+        result = self.level_order_traverse()
+        msg = ''
+        for i in result:
+            msg += i.data.__str__() + '\n'
+        return msg
 
     def __str__(self):
         output = ''
