@@ -60,6 +60,9 @@ class DVD:
         self.copies = copies
     def __eq__(self, other):
         return self.dvd_id == other
+
+    def __gt__(self, other):
+        return self.dvd_id > other
     def __str__(self):
         stars = ''
         for star in self.stars:

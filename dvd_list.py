@@ -13,21 +13,22 @@ class DvDList:
             self.dvd_list.insert(dvd)
         else:
             if self.dvd_list.get_size() == 1:
-                if self.dvd_list.head.data.get_movie_name() > dvd.get_movie_name():
+                if self.dvd_list.head.data.get_movie_name().lower() > dvd.get_movie_name().lower():
                     self.dvd_list.insert_at(0, dvd)
                 else:
                     self.dvd_list.insert(dvd)
             else:
                 current = self.dvd_list.head
                 index = 0
-                while current.next is not None:
-                    if current.data.get_movie_name() > dvd.get_movie_name():
+                while current is not None:
+                    if current.data.get_movie_name().lower() > dvd.get_movie_name().lower():
                         self.dvd_list.insert_at(index, dvd)
                         return True
                     else:
                         index += 1
                         current = current.next
                 self.dvd_list.insert(dvd)
+                return True
     def delete_dvd(self, dvd_id):
         self.dvd_list.remove_value(dvd_id)
     def get_dvd_list(self):

@@ -194,33 +194,55 @@ class Manager:
         strr = strr[0:len(strr) - 1]
         return strr
 
-    def customer_id_generator(self):
-        con = sqlite3.connect(r"database/dvd_store.db")
-        cur = con.cursor()
-        cur_obj = cur.execute('select max(account_number) from customer')
-        max_id = cur_obj.fetchone()
-        con.close()
-        if int(max_id[0]) > 9999:
-            return False
-        elif max_id[0] == '0000':
-            return '1111'
-        else:
-            new_id = str(int(max_id[0]) + 1)
-            return new_id
-
     def dvd_id_generator(self):
         con = sqlite3.connect(r"database/dvd_store.db")
         cur = con.cursor()
-        cur_obj = cur.execute('select max(dvd_id) from dvd')
-        max_id = cur_obj.fetchone()
-
-        if int(max_id[0][4:9]) > 9999:
-            con.close()
+        cur_obj = cur.execute('select dvd_id from dvd order by dvd_id')
+        ids = cur_obj.fetchall()
+        # print(ids)
+        # print(len(ids))
+        current_id = 1
+        new_id = None
+        # print(ids[1][0][4:9])
+        for i in range(len(ids)):
+            # print('from list',int(ids[i][0][4:9]))
+            # print('current', current_id)
+            if int(ids[i][0][4:9]) > current_id:
+                new_id = str(current_id)
+                # print(i)
+            else:
+                # print(i)
+                current_id += 1
+                i += 1
+        if new_id is None and int(ids[len(ids) - 1][0][4:9]) + 1 < 99999:
+            new_id = str(int(ids[len(ids) - 1][0][4:9]) + 1)
+        elif int(ids[len(ids) - 1][0][4:9]) + 1 > 99999:
             return False
-        else:
-            new_id = str(int(max_id[0][4:9]) + 1)
-            con.close()
-            return 'dvd_' + '0' * (5 - len(new_id)) + new_id
+        con.close()
+        return 'dvd_' + '0' * (len(ids[len(ids) - 1][0]) - 5) + new_id
+
+    def customer_id_generator(self):
+        con = sqlite3.connect(r"database/dvd_store.db")
+        cur = con.cursor()
+        cur_obj = cur.execute('select account_number from customer order by account_number')
+        ids = cur_obj.fetchall()
+        con.close()
+        current_id = 1111
+        new_id = None
+        for i in range(len(ids)):
+            if int(ids[i][0]) > current_id:
+                new_id = current_id
+                # print(i)
+            else:
+                # print(i)
+                current_id += 1
+                i += 1
+        if new_id is None and int(ids[len(ids) - 1][0]) + 1 < 9999:
+            new_id = int(ids[len(ids) - 1][0]) + 1
+        elif int(ids[len(ids) - 1][0]) + 1 > 9999:
+            return False
+        return str(new_id)
+
 
     def add_dvd(self):
         movie_name = input("Enter movie name: \t")
@@ -236,9 +258,10 @@ class Manager:
         cur = con.cursor()
         cur.execute(query)
         if input('ARE YOU SURE ABOUT ADDING' + movie_name + ' TO DATABASE ? \nInput 1 To COMMIT\nInput any to STOP\n>>>>>\t') == '1':
-            print(movie_name + '\nAdded to DB!\n')
+
             if self.dvds.insert(DVD(dvd_id, movie_name, stars, producer, director, company, copies, released_date)):
                 con.commit()
+                print(movie_name + '\nAdded to DB!\n')
             else:
                 print('unsuccessful\n')
         else:
